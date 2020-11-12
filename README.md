@@ -8,3 +8,14 @@ In this repository you will find all the assets required for the course `A Pract
 This solution has been built for for explaining all the concepts in this course. It is complete enough for covering a real case of microservices running on EKS and integrating with other AWS Services.
 
 > You can find in [here](_docs/api.md) the documentation of the APIs.
+
+
+## Run on Local
+
+To Run application on local with pointing to DynamoDB in your AWS account to store data, run following. 
+```
+export AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY_ID>
+export AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY>
+docker-compose up -d
+```
+> Open Browser and hit url http://localhost
