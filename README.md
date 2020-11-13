@@ -14,8 +14,23 @@ This solution has been built for for explaining all the concepts in this course.
 
 To Run application on local with pointing to DynamoDB in your AWS account to store data, run following. 
 ```
+export AWS_DEFAULT_REGION=us-east-1
 export AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY_ID>
 export AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY>
+
+# Create DynamoDB tables
+aws cloudformation create-stack --stack-name dev-client-api-table --template-body file://$PWD/clients-api/infra/cloudformation/dynamodb-table.json
+
+aws cloudformation create-stack --stack-name dev-inventory-api-table --template-body file://$PWD/inventory-api/infra/cloudformation/dynamodb-table.json
+
+aws cloudformation create-stack --stack-name dev-renting-api-table --template-body file://$PWD/renting-api/infra/cloudformation/dynamodb-table.json
+
+aws cloudformation create-stack --stack-name dev-resource-api-table --template-body file://$PWD/resource-api/infra/cloudformation/dynamodb-table.json
+
+
+# Start Docker Containers
 docker-compose up -d
 ```
 > Open Browser and hit url http://localhost
+
+

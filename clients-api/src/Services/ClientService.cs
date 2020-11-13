@@ -15,6 +15,7 @@ using Amazon.XRay.Recorder.Handlers.AwsSdk;
 using Amazon.XRay.Recorder.Handlers.System.Net;
 using Amazon.XRay.Recorder.Core.Internal.Entities;
 
+
 namespace ACG.EKS.Bookstore.Clients_API.Services
 {
     public class ClientService
@@ -24,7 +25,13 @@ namespace ACG.EKS.Bookstore.Clients_API.Services
 
         public ClientService(IDynamoDBSettings settings) 
         {
-            _dynamoDBClient = new AmazonDynamoDBClient(RegionEndpoint.USEast2);
+            string _region = Environment.GetEnvironmentVariable("AWS_DEFAULT_REGION");
+            RegionEndpoint regionEndpoint = RegionEndpoint.USEast2;
+            if (_region.Equals("us-east-1")) {
+                regionEndpoint = RegionEndpoint.USEast1;
+            }
+
+            _dynamoDBClient = new AmazonDynamoDBClient(regionEndpoint);
             var config = new DynamoDBContextConfig { TableNamePrefix = settings.Prefix };
             _context = new DynamoDBContext(_dynamoDBClient, config);
         }
