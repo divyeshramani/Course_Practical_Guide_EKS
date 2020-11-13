@@ -19,18 +19,24 @@ export AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY_ID>
 export AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY>
 
 # Create DynamoDB tables
-aws cloudformation create-stack --stack-name dev-client-api-table --template-body file://$PWD/clients-api/infra/cloudformation/dynamodb-table.json
+aws cloudformation create-stack --stack-name dev-eks-bookstore-client-api-table --template-body file://$PWD/clients-api/infra/cloudformation/dynamodb-table.json
 
-aws cloudformation create-stack --stack-name dev-inventory-api-table --template-body file://$PWD/inventory-api/infra/cloudformation/dynamodb-table.json
+aws cloudformation create-stack --stack-name dev-eks-bookstore-inventory-api-table --template-body file://$PWD/inventory-api/infra/cloudformation/dynamodb-table.json
 
-aws cloudformation create-stack --stack-name dev-renting-api-table --template-body file://$PWD/renting-api/infra/cloudformation/dynamodb-table.json
+aws cloudformation create-stack --stack-name dev-eks-bookstore-renting-api-table --template-body file://$PWD/renting-api/infra/cloudformation/dynamodb-table.json
 
-aws cloudformation create-stack --stack-name dev-resource-api-table --template-body file://$PWD/resource-api/infra/cloudformation/dynamodb-table.json
+aws cloudformation create-stack --stack-name dev-eks-bookstore--resource-api-table --template-body file://$PWD/resource-api/infra/cloudformation/dynamodb-table.json
 
 
 # Start Docker Containers
 docker-compose up -d
 ```
+
 > Open Browser and hit url http://localhost
+
+### Cleanig Resources
+```
+aws cloudformation list-stacks | jq -r '.StackSummaries[] | .StackName' | grep "dev-eks-bookstore" | xargs -n1 aws cloudformation delete-stack --stack-name 
+```
 
 
