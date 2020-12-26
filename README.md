@@ -91,6 +91,7 @@ helm repo add eks https://aws.github.io/eks-charts
 
 # Create NameSpace for AppMesh
 kubectl create namespace appmesh-system
+
 # Create IAM Role which will be used by AppMesh Controller
 eksctl create iamserviceaccount \
   --namespace appmesh-system \
@@ -98,11 +99,17 @@ eksctl create iamserviceaccount \
   --attach-policy-arn arn:aws:iam::aws:policy/AWSCloudMapFullAccess,arn:aws:iam::aws:policy/AWSAppMeshFullAccess,arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess \
   --cluster eks-acg
   --approve
+
 # Install AppMesh Controller
 helm upgrade --install appmesh-controller eks/appmesh-controller \
   --namespace appmesh-system \
   --set region=us-east-2 \
   --set serviceAccount.create=false
   --set serviceAccount.name=appmesh-controller \
-  --set log.level=debug
+  --set log.level=debug \
+  --set tracing.enable=true --set tracing.provider=x-ray
+
+helm upgrade --install --namespace development clients-api-development . 
 ```
+
+
