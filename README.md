@@ -37,7 +37,7 @@ docker-compose up -d
 ```
 docker-compose down
 
-aws cloudformation list-stacks | jq -r '.StackSummaries[] | .StackName' | grep "dev-eks-bookstore" | xargs -n1 aws cloudformation delete-stack --stack-name 
+aws cloudformation list-stacks --stack-status-filter UPDATE_COMPLETE | jq -r '.StackSummaries[] | .StackName' | grep "dev-eks-bookstore" | xargs -n1 aws cloudformation delete-stack --stack-name 
 ```
 
 
